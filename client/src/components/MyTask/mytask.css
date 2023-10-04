@@ -1,0 +1,6 @@
+.mytask {
+	display: flex;
+	align-items: stretch;
+	flex-direction: column;
+	gap: 10px;
+}

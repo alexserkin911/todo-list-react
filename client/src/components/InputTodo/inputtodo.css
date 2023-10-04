@@ -1,0 +1,26 @@
+.input-todo{
+	width: 100%;
+	display: flex;
+}
+
+.input-todo__value{
+	width: 100%;
+	border-top-left-radius: 5px;
+	border-bottom-left-radius: 5px;
+	font-family: 'Poppins', sans-serif;
+	padding-left: 10px;
+	font-size: 20px;
+	border: none;
+	outline: none;
+}
+
+.input-todo__btn{
+	padding: 7px 20px;
+	font-size: 20px;
+	color: rgb(242, 245, 248);
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	background-color: rgb(29, 142, 228);
+	border: none;
+	cursor: pointer;
+}

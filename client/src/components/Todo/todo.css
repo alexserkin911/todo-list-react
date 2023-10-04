@@ -1,0 +1,25 @@
+.todo__cont {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: calc(100vh - 70px);
+	background-color: rgb(246, 246, 246);
+}
+
+.todo__box {
+	display: flex;
+	flex-direction: column;
+	min-width: 450px;
+	padding: 20px 55px;
+	background-color: #dcdbdb;
+	gap: 15px;
+}
+
+.start__add {
+	font-size: 24px;
+	color: black;
+}
+
+.todo__box__info {
+	font-size: 20px;
+}
