@@ -1,6 +1,7 @@
 import { FC, createContext, useState } from 'react'
 import { SubmitHandler, useForm } from 'react-hook-form'
 import { useLocation, useNavigate } from 'react-router-dom'
+import { login, registration } from '../http/userApi'
 import { Props } from '../types'
 import {
 	IINITUSER,
@@ -39,47 +40,17 @@ export const UserContextProvider: FC<Props> = ({ children }) => {
 		formState: { errors, isValid },
 	} = useForm<INITREG>({ defaultValues: initReg, mode: 'onTouched' })
 
-	const submitHandlerReg: SubmitHandler<INITREG> = async (data: INITREG) => {
+	const clickAuth: SubmitHandler<INITREG> = async (data: INITREG) => {
 		try {
-			const userFromBack: Response = await fetch(
-				'http://localhost:3001/user/register',
-				{
-					method: 'POST',
-					headers: { 'Content-Type': 'application/json' },
-					credentials: 'include',
-					body: JSON.stringify(data),
-				}
-			)
-			const res = await userFromBack.json()
-
-			if (res.errors) {
-				openErrorModal()
-				return setErrorsValidation(res.errors)
+			let userFromBack
+			if (isLogin) {
+				userFromBack = await login(data)
+			} else {
+				userFromBack = await registration(data)
 			}
-			if (res.message) {
-				reset()
-				openErrorModal()
-				return setErrorsValidation(res.message)
-			}
-			reset()
-			setUser(res)
-			navigate('/')
-		} catch (error) {
-			console.error('Ошибка при выполнении запроса:', error)
-		}
-	}
-
-	const submitHandlerLogin: SubmitHandler<INITREG> = async (data: INITREG) => {
-		try {
-			const userFromBack = await fetch('http://localhost:3001/user/login', {
-				method: 'POST',
-				headers: { 'Content-type': 'application/json' },
-				credentials: 'include',
-				body: JSON.stringify(data),
-			})
 			const result = await userFromBack.json()
-
 			if (result.message) {
+				reset()
 				openErrorModal()
 				return setErrorsValidation(result.message)
 			}
@@ -87,9 +58,61 @@ export const UserContextProvider: FC<Props> = ({ children }) => {
 			setUser(result)
 			navigate('/')
 		} catch (error) {
-			console.log('user login not sent', error)
+			console.log('auth error', error)
 		}
 	}
+
+	// const submitHandlerReg: SubmitHandler<INITREG> = async (data: INITREG) => {
+	// 	try {
+	// 		const userFromBack: Response = await fetch(
+	// 			'http://localhost:3001/user/register',
+	// 			{
+	// 				method: 'POST',
+	// 				headers: { 'Content-Type': 'application/json' },
+	// 				credentials: 'include',
+	// 				body: JSON.stringify(data),
+	// 			}
+	// 		)
+	// 		const res = await userFromBack.json()
+
+	// 		if (res.errors) {
+	// 			openErrorModal()
+	// 			return setErrorsValidation(res.errors)
+	// 		}
+	// 		if (res.message) {
+	// 			reset()
+	// 			openErrorModal()
+	// 			return setErrorsValidation(res.message)
+	// 		}
+	// 		reset()
+	// 		setUser(res)
+	// 		navigate('/')
+	// 	} catch (error) {
+	// 		console.error('Ошибка при выполнении запроса:', error)
+	// 	}
+	// }
+
+	// const submitHandlerLogin: SubmitHandler<INITREG> = async (data: INITREG) => {
+	// 	try {
+	// 		const userFromBack = await fetch('http://localhost:3001/user/login', {
+	// 			method: 'POST',
+	// 			headers: { 'Content-type': 'application/json' },
+	// 			credentials: 'include',
+	// 			body: JSON.stringify(data),
+	// 		})
+	// 		const result = await userFromBack.json()
+
+	// 		if (result.message) {
+	// 			openErrorModal()
+	// 			return setErrorsValidation(result.message)
+	// 		}
+	// 		reset()
+	// 		setUser(result)
+	// 		navigate('/')
+	// 	} catch (error) {
+	// 		console.log('user login not sent', error)
+	// 	}
+	// }
 
 	return (
 		<UserContext.Provider
@@ -100,8 +123,7 @@ export const UserContextProvider: FC<Props> = ({ children }) => {
 				location,
 				isLogin,
 				navigate,
-				submitHandlerReg,
-				submitHandlerLogin,
+				clickAuth,
 				errorsValidation,
 				setErrorsValidation,
 				register,

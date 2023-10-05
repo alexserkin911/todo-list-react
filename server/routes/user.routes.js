@@ -13,9 +13,9 @@ router.get('/check', (req, res) => {
 
 router.post('/register', registerValidation, async (req, res) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json(errors.array());
+    const message = validationResult(req);
+    if (!message.isEmpty()) {
+      return res.status(400).json(message.array());
     }
     const { name, email, password } = req.body;
     const hashedPassword = await bcrypt.hash(password, 10);

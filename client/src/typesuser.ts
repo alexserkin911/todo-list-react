@@ -34,6 +34,7 @@ export const initUser: IINITUSER = {
 	createdAt: '',
 }
 export interface IUserContext {
+	clickAuth: SubmitHandler<INITREG>
 	initReg: INITREG
 	user: IINITUSER
 	setUser: React.Dispatch<React.SetStateAction<IINITUSER>>
@@ -41,8 +42,6 @@ export interface IUserContext {
 	navigate: NavigateFunction
 	initUser: IINITUSER
 	isLogin: boolean
-	submitHandlerReg: SubmitHandler<INITREG>
-	submitHandlerLogin: SubmitHandler<INITREG>
 	errorsValidation: string
 	setErrorsValidation: React.Dispatch<React.SetStateAction<string>>
 	register: UseFormRegister<INITREG>

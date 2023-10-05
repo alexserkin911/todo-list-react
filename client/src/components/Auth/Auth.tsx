@@ -1,7 +1,6 @@
 import { useContext } from 'react'
 import { Link, NavLink } from 'react-router-dom'
 import { UserContext } from '../../context/UserContext'
-
 import Modal from '../Modal/Modal'
 import './auth.css'
 import {
@@ -13,8 +12,7 @@ import {
 export default function Auth(): JSX.Element {
 	const {
 		isLogin,
-		submitHandlerReg,
-		submitHandlerLogin,
+		clickAuth,
 		errorsValidation,
 		register,
 		handleSubmit,
@@ -42,12 +40,7 @@ export default function Auth(): JSX.Element {
 								SIGN UP
 							</NavLink>
 						</div>
-						<form
-							onSubmit={handleSubmit(
-								isLogin ? submitHandlerLogin : submitHandlerReg
-							)}
-							className='form'
-						>
+						<form onSubmit={handleSubmit(clickAuth)} className='form'>
 							{isLogin ? (
 								<></>
 							) : (

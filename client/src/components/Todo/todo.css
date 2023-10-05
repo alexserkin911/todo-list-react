@@ -3,16 +3,19 @@
 	justify-content: center;
 	align-items: center;
 	height: calc(100vh - 70px);
-	background-color: rgb(246, 246, 246);
+	background-color: #c89666;
 }
 
 .todo__box {
 	display: flex;
 	flex-direction: column;
 	min-width: 450px;
-	padding: 20px 55px;
-	background-color: #dcdbdb;
+	min-height: 400px;
+	padding: 20px 30px;
+	background-color: #1f5863;
 	gap: 15px;
+	border-radius: 10px;
+	box-shadow: 3px 6px 40px black;
 }
 
 .start__add {
@@ -22,4 +25,9 @@
 
 .todo__box__info {
 	font-size: 20px;
+	color: #fff;
+}
+
+.todo__box__pagination {
+	margin-top: auto;
 }
